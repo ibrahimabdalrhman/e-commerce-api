@@ -244,8 +244,9 @@ exports.webhook = asyncHandler(async (req, res) => {
 
   const calculatedHMAC = crypto
     .createHmac("sha512", secret)
-    .update(payload)
+    .update(Buffer.from(payload, 'utf8'))
     .digest("hex");
+  
 
   console.log("calculatedHMAC", calculatedHMAC);
 
