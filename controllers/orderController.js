@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const ApiError = require("../utils/apiError"); // Adjust the path as necessary
 const asyncHandler = require("express-async-handler");
 const axios = require("axios");
+const crypto = require("crypto");
 
 exports.creatCasheOrder = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
@@ -227,7 +228,7 @@ exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.headers["hmac"];
 
-  console.log("webhook ::::: Incoming HMAC:", incomingHMAC);
+  console.log("webhook ::::: Incoming HMAC:");
 
   // Calculate HMAC to verify Paymob's request
   const computedHMAC = crypto
