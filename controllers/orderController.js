@@ -236,7 +236,7 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
 exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.query.hmac;
-console.log("req.body",req.body);
+console.log("req.body.extra",req.body.extra);
   console.log("body.obj.order.shipping_data",req.body.obj.order.shipping_data);
   console.log("body.obj.order.items",req.body.obj.order.items);
   console.log("body.obj.payment_key_claims.billing_data",req.body.obj.payment_key_claims.billing_data);
