@@ -218,6 +218,7 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
         currency: "EGP",
         integration_id: process.env.PAYMOB_INTEGRATION_ID,
         data: data,
+        extra: extra,
       }
     );
     const paymentKey = paymentKeyResponse.data.token;
