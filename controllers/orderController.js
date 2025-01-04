@@ -228,33 +228,12 @@ exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.query.hmac;
 
-  console.log("body :",req.body);
-  console.log("query :",req.query);
-  console.log("headers :",req.headers);
+  console.log("body.obj.order.shipping_data",req.body.obj.order.shipping_data);
+  console.log("body.obj.order.items",req.body.obj.order.items);
+  console.log("body.obj.payment_key_claims.billing_data",req.body.obj.payment_key_claims.billing_data);
+  // console.log("query :",req.query);
+  // console.log("headers :",req.headers);
 
   // Calculate HMAC to verify Paymob's request
-  const computedHMAC = crypto
-    .createHmac("sha512", secret)
-    .update(JSON.stringify(req.body))
-    .digest("hex");
-
-  console.log("webhook ::::: Computed HMAC:", computedHMAC);
-
-  if (computedHMAC === incomingHMAC) {
-    // Handle the webhook event
-    const { type, obj } = req.body;
-    if (type === "TRANSACTION") {
-      console.log("Transaction Update:", obj);
-      // Example: Update your order/payment status
-    }
-
-    console.log("Webhook received and verified.");
-
-    res.status(200).send("Webhook received and verified.");
-  } else {
-    console.log("Invalid HMAC signature");
-
-    console.error("Invalid HMAC signature");
-    res.status(403).send("Invalid HMAC signature");
-  }
+ 
 });
