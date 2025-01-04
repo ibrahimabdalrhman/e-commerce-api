@@ -20,7 +20,7 @@ const {
 const allowToRole=require("../middlewares/roleMiddleware")
 
 // Routes
-router.get("/",allowToRole("ADMIN"), getAll);
+router.get("/",auth,allowToRole("ADMIN"), getAll);
 router.get("/profile", auth, profile);
 router.get("/:id", getOne);
 // Update image

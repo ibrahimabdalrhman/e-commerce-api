@@ -31,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
+
 // Routes
 const userRoute = require("./routes/userRoute");
 const categoryRoute = require("./routes/categoryRoute");
@@ -39,7 +40,9 @@ const cartRoute = require("./routes/cartRoute");
 const orderRoute = require("./routes/orderRoute");
 const authRoute = require("./routes/authRoute");
 const reviewsRoute = require("./routes/reviewRoute");
+const { webhook } = require("./controllers/orderController");
 
+app.post('/webhook/paymob', webhook);
 app.use("/api/users", userRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/products", productRoute);

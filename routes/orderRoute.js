@@ -11,12 +11,14 @@ const {
   canceledOrder,
   completedOrder,
   creatCasheOrder,
+  onlinPaymentOrder,
 } = require("../controllers/orderController");
 const allowToRole = require("../middlewares/roleMiddleware");
 
 router.use(auth);
 
 router.post("/cash/create", creatCasheOrder);
+router.post("/payment/create", onlinPaymentOrder);
 router.get("/", getOrders);
 router.get("/:id", getOrder);
 router.patch("/accepted-order/:id",  acceptOrder);
