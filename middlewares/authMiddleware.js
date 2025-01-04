@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const ApiError = require('../utils/ApiError');
+const ApiError = require('../utils/apiError');
 
 const authenticate = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];

@@ -56,7 +56,8 @@ app.all("*", (req, res, next) => {
 // Global Error Handler
 app.use(errorMiddleware);
 
+// Server Listener
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server running on port ${port} in ${process.env.NODE_ENV} mode`);
+  console.log(`Server running on port ${port}`);
 });

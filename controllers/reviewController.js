@@ -1,6 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const ApiError = require("../utils/ApiError"); // Adjust the path as necessary
+const ApiError = require("../utils/apiError"); // Adjust the path as necessary
 const asyncHandler = require("express-async-handler");
 
 exports.addReview = asyncHandler(async (req, res, next) => {

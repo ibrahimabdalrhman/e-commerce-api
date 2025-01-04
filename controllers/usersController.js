@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const asyncHandler = require("express-async-handler");
-const ApiError = require("../utils/ApiError");
+const ApiError = require("../utils/apiError");
 const jwt = require("jsonwebtoken");
 const twilio = require("twilio");
 
