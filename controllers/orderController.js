@@ -242,11 +242,12 @@ exports.webhook = asyncHandler(async (req, res) => {
   console.log("Incoming HMAC", incomingHMAC);
   console.log("payload", payload);
 
-
   const calculatedHMAC = crypto
     .createHmac("sha512", secret)
     .update(payload)
     .digest("hex");
+    
+  console.log("calculatedHMAC", calculatedHMAC);
 
   if (calculatedHMAC !== incomingHMAC) {
     return next(new ApiError("Invalid HMAC signature", 400));
