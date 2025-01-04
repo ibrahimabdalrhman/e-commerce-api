@@ -188,8 +188,9 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
 
     // Step 3: Generate Payment Key
     const billingData = {
-      first_name: "User",
-      last_name: "Name",
+      userId: userId,
+      first_name: "jac",
+      last_name: "jac",
       email: "user@example.com",
       phone_number: "01000000000",
       street: "123 Street",
