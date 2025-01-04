@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const asyncHandler = require("express-async-handler");
-const ApiError = require("./ApiError");
+const ApiError = require("./apiError");
 
 const fsDeleteImage = (subPath,url) => {
   const imageFilename = path.basename(url);
