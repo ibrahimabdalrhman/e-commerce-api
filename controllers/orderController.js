@@ -235,6 +235,8 @@ exports.webhook = asyncHandler(async (req, res) => {
     .update(JSON.stringify(req.body))
     .digest("hex");
 
+  console.log("webhook ::::: Computed HMAC:", computedHMAC);
+
   if (computedHMAC === incomingHMAC) {
     // Handle the webhook event
     const { type, obj } = req.body;
@@ -243,8 +245,12 @@ exports.webhook = asyncHandler(async (req, res) => {
       // Example: Update your order/payment status
     }
 
+    console.log("Webhook received and verified.");
+
     res.status(200).send("Webhook received and verified.");
   } else {
+    console.log("Invalid HMAC signature");
+
     console.error("Invalid HMAC signature");
     res.status(403).send("Invalid HMAC signature");
   }
