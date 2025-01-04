@@ -237,6 +237,12 @@ exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.query.hmac;
   const payload = JSON.stringify(req.body);
+
+  console.log("secret", secret);
+  console.log("Incoming HMAC", incomingHMAC);
+  console.log("payload", payload);
+
+
   const calculatedHMAC = crypto
     .createHmac("sha512", secret)
     .update(payload)
