@@ -200,12 +200,12 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
       city: "Cairo",
       country: "EG",
     };
-    const data={
+    const data = {
       userId: userId,
-    }
-    const extra={
+    };
+    const extra = {
       userId: userId,
-    }
+    };
 
     const paymentKeyResponse = await axios.post(
       `${process.env.PAYMOB_BASE_URL}/acceptance/payment_keys`,
@@ -236,13 +236,28 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
 exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.query.hmac;
-console.log("req.body.extra",req.body.extra);
-  console.log("body.obj.order.shipping_data",req.body.obj.order.shipping_data);
-  console.log("body.obj.order.items",req.body.obj.order.items);
-  console.log("body.obj.payment_key_claims.billing_data",req.body.obj.payment_key_claims.billing_data);
-  // console.log("query :",req.query);
-  // console.log("headers :",req.headers);
+  const payload = JSON.stringify(req.body);
+  const calculatedHMAC = crypto
+    .createHmac("sha512", secret)
+    .update(payload)
+    .digest("hex");
 
-  // Calculate HMAC to verify Paymob's request
- 
+  if (calculatedHMAC !== incomingHMAC) {
+    return next(new ApiError("Invalid HMAC signature", 400));
+  }
+
+  const paymentStatus = req.body.obj.success; // Payment status (true or false)
+  const paymentId = req.body.obj.id; // Payment transaction ID
+  const userId = req.body.extra?.userId;
+  if (paymentStatus) {
+    // Process successful payment
+    console.log("Payment successful", paymentId, userId);
+    // Here you can update the order status or take further actions as needed.
+  } else {
+    // Handle failed payment
+    console.log("Payment failed", paymentId, userId);
+    // Update order or notify user as needed
+  }
+
+  res.status(200).json({ message: "Webhook received" });
 });
