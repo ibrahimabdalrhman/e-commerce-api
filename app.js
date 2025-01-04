@@ -5,7 +5,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const rateLimit = require("express-rate-limit");
 const dotenv = require("dotenv");
-const ApiError = require("./utils/ApiError");
+const ApiError = require("./utils/apiError");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
 dotenv.config();
