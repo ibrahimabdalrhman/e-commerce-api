@@ -228,7 +228,8 @@ exports.webhook = asyncHandler(async (req, res) => {
   const secret = process.env.PAYMOB_HMAC_SECRET; // Paymob HMAC Secret
   const incomingHMAC = req.headers["hmac"];
 
-  console.log("webhook ::::: Incoming HMAC:");
+  console.log("body :",req.body);
+  console.log("query :",req.query);
 
   // Calculate HMAC to verify Paymob's request
   const computedHMAC = crypto
