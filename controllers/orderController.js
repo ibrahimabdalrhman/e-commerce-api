@@ -200,6 +200,12 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
       city: "Cairo",
       country: "EG",
     };
+    const data={
+      userId: userId,
+    }
+    const extra={
+      userId: userId,
+    }
 
     const paymentKeyResponse = await axios.post(
       `${process.env.PAYMOB_BASE_URL}/acceptance/payment_keys`,
@@ -211,6 +217,7 @@ exports.onlinPaymentOrder = asyncHandler(async (req, res, next) => {
         billing_data: billingData,
         currency: "EGP",
         integration_id: process.env.PAYMOB_INTEGRATION_ID,
+        data: data,
       }
     );
     const paymentKey = paymentKeyResponse.data.token;
