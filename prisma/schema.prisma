@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  type         Type
+  fullName     String
+  email        String    @unique
+  mobileNumber String    @unique
+  password     String
+  address      String
+  city         String
+  profileImage String?
+  images       Image[]
+  createdAt    DateTime  @default(now())
+  orders       Order[] // Reverse relation for orders
+  Cart         Cart[]
+  IsVerified   Boolean   @default(false) // Check if the user is verified
+  otp          String? // Store the OTP
+  otpExpiresAt DateTime? // Expiration time of the OTP
+  Product      Product[]
+  Review       Review[]
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  url       String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime  @default(now())
+  products    Product[] @relation("ProductCategory") // Reverse relation
+}
+
+model Product {
+  id                  Int         @id @default(autoincrement())
+  name                String
+  description         String
+  price               Float
+  priceBeforeDiscount Float?
+  createdAt           DateTime    @default(now())
+  categories          Category[]  @relation("ProductCategory")
+  user                User?       @relation(fields: [userId], references: [id])
+  userId              Int?
+  orderItems          OrderItem[] // Reverse relation for OrderItems
+  CartItem            CartItem[]
+  images              Image[]
+  Review              Review[]
+  ratingsAverage      Float       @default(0.0) // Average of all ratings
+  ratingsQuantity     Int         @default(0) // Total number of ratings
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  totalAmount   Float
+  isPaid        Boolean       @default(false)
+  paidAt        DateTime?
+  orderStatus   OrderStatus   @default(PENDING) // Tracks the order status
+  paymentMethod PaymentMethod
+  createdAt     DateTime      @default(now())
+  user          User          @relation(fields: [userId], references: [id])
+  orderItems    OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  quantity  Int
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  productId Int
+  rating    Int
+  comment   String
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+enum PaymentMethod {
+  CASH
+  ONLINE
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  CANCELED
+  COMPLETED
+}
+
+enum Type {
+  CAFE
+  RESTURANT
+  CUSTOMER
+  ADMIN
+}
