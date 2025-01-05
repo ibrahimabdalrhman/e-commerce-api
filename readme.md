@@ -26,31 +26,6 @@ This is a backend API for an e-commerce application. It is built using Node.js a
 
 3. Set up your environment variables. Create a `.env` file in the root directory and add the necessary configurations (e.g., database connection, API keys).
 
-## API Endpoints
-
-Here are some of the main API endpoints available in this project:
-
-### User Authentication:
-
-- `POST /auth/register` - Register a new user
-- `POST /auth/login` - Authenticate a user and return a token
-
-### Product Management:
-
-- `GET /products` - Retrieve a list of all products
-- `GET /products/:id` - Retrieve details of a specific product
-- `POST /products` - Add a new product
-- `PUT /products/:id` - Update an existing product
-- `DELETE /products/:id` - Delete a product
-
-### Order Management:
-
-- `GET /orders` - Retrieve a list of all orders
-- `GET /orders/:id` - Retrieve details of a specific order
-- `POST /orders` - Create a new order
-- `PUT /orders/:id` - Update an existing order
-- `DELETE /orders/:id` - Delete an order
-
 ## Postman API Documentation
 
 For detailed API documentation and test cases, you can refer to the Postman documentation provided [here](https://drive.google.com/file/d/1P9Fh9Jh0UQZhUB5-pauQ2HHKNM4Vi1j5/view?usp=sharing).
