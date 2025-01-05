@@ -247,7 +247,6 @@ exports.webhook = asyncHandler(async (req, res) => {
     .update(Buffer.from(payload, 'utf8'))
     .digest("hex");
   
-
   console.log("calculatedHMAC", calculatedHMAC);
 
   if (calculatedHMAC !== incomingHMAC) {
